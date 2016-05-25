@@ -21,17 +21,22 @@ public class MainActivity extends AppCompatActivity {
 
         sqLiteDatabase.execSQL("create TABLE IF NOT EXISTS  contact (name TEXT, phone INTEGER, email TEXT)");
         sqLiteDatabase.execSQL("insert into  contact values ('Joao',32222222,'teste@teste.com')");
+        sqLiteDatabase.execSQL("insert into  contact values ('Pedro',32222222,'teste@teste.com')");
+        sqLiteDatabase.execSQL("insert into  contact values ('Antonio',32222222,'teste@teste.com')");
         Cursor cursor=sqLiteDatabase.rawQuery("Select * from contact ",null);
         Log.d("SQL", "before if");
         if(cursor.moveToFirst()){
-            Log.d("SQL", "in if");
-            String name= cursor.getString(0);
-            int phone=cursor.getInt(1);
-            String email=cursor.getString(2);
-            Toast.makeText(getApplicationContext(),"Name "+name+" Phone "+phone+" Email "+email,Toast.LENGTH_LONG).show();
+            do {
+                Log.d("SQL", "in if");
+                String name = cursor.getString(0);
+                int phone = cursor.getInt(1);
+                String email = cursor.getString(2);
+                Toast.makeText(getApplicationContext(), "Name " + name + " Phone " + phone + " Email " + email, Toast.LENGTH_LONG).show();
+            }while (cursor.moveToNext());
         }
         else{
             Toast.makeText(getApplicationContext(),"Erro retrieving data ",Toast.LENGTH_LONG).show();
         }
+        sqLiteDatabase.close();
     }
 }
